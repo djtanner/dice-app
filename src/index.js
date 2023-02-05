@@ -3,11 +3,43 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import HighScores from './Components/HighScores';
+import Login from './Components/Login';
+import {useCookies} from 'react-cookie';
+import Header from './Components/Header';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const Routing = () => {
+
+  const [cookies, setCookie, removeCookie] = useCookies(['user'])
+
+    const authToken = cookies.AuthToken
+
+  return(
+    
+    <Router>
+    <Header authToken={authToken}/>
+      <Routes>
+        <Route exact path="/" element={<App/>} />
+        <Route path="/highscores" element={<HighScores/>} />  
+        <Route path="/login" element={<Login/>} />  
+        <Route path="/signup" element={<Login/>} />  
+      </Routes>
+    </Router>
+  )
+}
+
+
+
+
+
 root.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <Routing />
   </React.StrictMode>
 );
 
